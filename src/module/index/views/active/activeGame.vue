@@ -15,37 +15,35 @@
           <div class="count-width">
             <div class="count-sel">
               <img src="../../../../assets/images/active/line@2x.png" class="line line-2" />
-              <img  v-drag="value" style="z-index:3" src="../../../../assets/images/active/2@2x.png" class="count-2 count" alt="" />
+              <img v-drag="register(isShowMSG)" style="z-index:3" src="../../../../assets/images/active/2@2x.png" class="count-2 count" alt="" />
             </div>
           </div>
           <div class="count-width count-width-paws">
             <div class="count-box-paws">
               <img src="../../../../assets/images/active/line@2x.png" class="line-paws" />
-              <img  v-drag="value" style="z-index:3" src="../../../../assets/images/active/paws@2x.png" class="count-paws" alt="" />
+              <img v-drag="register(isShowMSG)" style="z-index:3" src="../../../../assets/images/active/paws@2x.png" class="count-paws" alt="" />
             </div>
           </div>
           <div class="count-width count-width-1">
             <div class="count-box-1">
               <img src="../../../../assets/images/active/line@2x.png" class="line-1" />
-              <img  v-drag="value" style="z-index:3" src="../../../../assets/images/active/1@2x.png" class="count-1" alt="" />
+              <img v-drag="register(isShowMSG)" style="z-index:3" src="../../../../assets/images/active/1@2x.png" class="count-1" alt="" />
             </div>
           </div>
           <div class="count-width count-width-8">
             <div class="count-box-8">
               <img src="../../../../assets/images/active/line@2x.png" style="height:.8rem" class="line-8" />
-              <img v-drag="value" style="z-index:3" src="../../../../assets/images/active/8@2x.png" class="count-8" alt="" />
+              <img v-drag="register(isShowMSG)" style="z-index:3" src="../../../../assets/images/active/8@2x.png" class="count-8" alt="" />
             </div>
           </div>
           <div class="count-width count-width-dog">
             <div class="count-box-dog">
               <img src="../../../../assets/images/active/line@2x.png" class="line-dog" />
-                <img  v-drag="value" style="z-index:3" src="../../../../assets/images/active/dog@2x.png" class="count-dog"  @click="text" alt="" />
+                <img  v-drag="register(isShowMSG)" style="z-index:3" src="../../../../assets/images/active/dog@2x.png" class="count-dog"  @click="text" alt="" />
             </div>
           </div>
       </div>
-      <div class='bill'>
-          
-      </div>
+      <div class='bill'></div>
       <div class="reward" @click="text">
         <div class="scroll-wrap">
           <ul class="scroll-content" :style="{top}">
@@ -53,10 +51,17 @@
           </ul>
         </div>
       </div>
-      <div v-if="false">
-
+      
+    </div>
+    <div v-if="isShowMSG">
+      <div class="msk"></div>
+      <div class="hongbao">
+        <img  src="../../../../assets/images/active/hongbao.png" class="hongbao-img" alt="">
+        <span class="hongbaoMSG">恭喜你获得2元红包</span>
+        <button class="hongbaoBTN" @click="clickFlase"></button>
       </div>
     </div>
+   
   </div>
 </template>
 
@@ -78,7 +83,7 @@ export default {
       endTime : '2017-12-30 15:07:00',
       name:'开始',
       bottom:false,
-      value:'222',
+      isShowMSG:false,
       prizeList: [
         { name: 0 },
         { name: 1 },
@@ -126,8 +131,13 @@ export default {
       let obj={name:6}
       this.prizeList.push(obj)
     },
-    greet:function(obj){
-      console.log(obj)
+    register:function(flag){
+      return (el)=>{
+        this.isShowMSG =true
+      }
+    },
+    clickFlase:function(){
+       this.isShowMSG =false
     }
     
   },
@@ -154,53 +164,94 @@ export default {
   },
   directives:{
     "drag":{
-    inserted (el, value) {
-    let oDiv = el
-    let pDiv=el.parentElement.clientHeight - el.clientHeight
-    var disY=0
-    var moveY=0
-    var endY=0
-    var startY=el.style.top;
-    var lineStart=0;
-    var line=el.parentElement.firstChild.style.height
-    var line1=el.parentElement.firstChild.clientHeight
-    // var presub=parseFloat(el.parentNode.firstChild.style.height) 
-    oDiv.addEventListener('touchstart', function (event) {
-      event.preventDefault();
-      let touch= event.targetTouches[0]
-      disY = touch.pageY
-    },false)
+      inserted (el, binding) {
+        let oDiv = el
+        let pDiv=el.parentElement.clientHeight - el.clientHeight
+        var disY=0
+        var moveY=0
+        var endY=0
+        var startY=el.style.top;
+        var lineStart=0;
+        var line=el.parentElement.firstChild.clientHeight
+        oDiv.addEventListener('touchstart', function (event) {
+          event.preventDefault();
+          let touch= event.targetTouches[0]
+          disY = touch.pageY
+        },false)
 
-    oDiv.addEventListener('touchmove',function(event){
-      event.preventDefault();
-      var touch = event.targetTouches[0]; 
-      endY = touch.pageY;
-      moveY = parseInt((endY - disY));
-      if(moveY > 0 && moveY < pDiv){
-        el.style.top=`${moveY}px`;
-        el.parentElement.firstChild.style.height=line1+moveY+'px'
-     
-      }
-     
-    },false)
+        oDiv.addEventListener('touchmove',function(event){
+          event.preventDefault();
+          var touch = event.targetTouches[0]; 
+          endY = touch.pageY;
+          moveY = parseInt((endY - disY));
+          if(moveY > 0 && moveY < pDiv){
+            el.style.top=`${moveY}px`;
+            el.parentElement.firstChild.style.height=line+moveY+'px'
+        
+          }
+        
+        },false)
 
-    oDiv.addEventListener('touchend',function(event){
-      el.style.top=startY;
-      el.parentNode.firstChild.style.height=line1+'px'
-      if(moveY>10){
-         console.log(value.value)
-         console.log(api)
-      }
-      
-  }, false);
- 
-   } 
+        oDiv.addEventListener('touchend',function(event){
+          el.style.top=startY;
+          el.parentNode.firstChild.style.height=line+'px'
+          if(moveY>10){ 
+             if(typeof binding.value == 'function'){
+                binding.value(el);
+             }
+          }
+          
+        }, false);
+      } 
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.hongbaoMSG{
+    position: absolute;
+    bottom: 29%;
+    left: 28%;
+    right: 0;
+    width: 3.2rem;
+    height: 0.6rem;
+    font-size: .36rem;
+    color: #ffd03f;
+    font-weight: bold;
+}
+.hongbaoBTN{
+    position: absolute;
+    bottom: 10%;
+    left: 28%;
+    right: 0;
+    width: 3.2rem;
+    height: 0.6rem;
+    background-color: transparent;
+    outline: none;
+    border: none;
+}
+.hongbao-img{
+      width: 6rem;
+}
+.hongbao{
+      position: absolute;
+    left: 0;
+    right: 0;
+    top: 25%;
+    z-index: 10;
+    text-align: center;
+}
+.msk{
+position:absolute;
+top:0;
+bottom:0;
+left:0;
+right:0;
+background:#000;
+opacity:0.7;
+z-index: 9;
+}
 .box{
   width: 100%;
   height: 100%;
