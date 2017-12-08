@@ -1,0 +1,8 @@
+{
+  "isSuccess":true,
+  "data":{
+    "test":"testValue"
+  },
+  "errorNo":0,
+  "errorMsg":null
+}

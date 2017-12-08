@@ -1,0 +1,8 @@
+{
+	"OP_HOST": "localhost",
+	"OP_UCENTER": "https://www.ucenter.kb123.com",
+	"OP_HD": "https://www.hd.kb123.com",
+	"OP_TM": "https://tm.kbao123.com/3.8",
+	"OP_LIVE_POLYV": "http://api.live.polyv.net",
+	"OP_CHAT_POLYV": "http://api.chat.polyv.net:80"
+}

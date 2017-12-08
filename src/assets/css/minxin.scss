@@ -1,0 +1,27 @@
+
+@mixin onepx-border($color: #666,$border-top-width:0px,$boter-right-width:0px,$border-bottom-width:0px,$border-left-width:0px,$border-radius:0px) {
+  &{
+    position: relative;
+    border:none;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top: $border-top-width solid $color;
+    border-right: $boter-right-width solid $color;
+    border-bottom: $border-bottom-width solid $color;
+    border-left: $border-left-width solid $color;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 200%;
+    height: 200%;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    -webkit-transform-origin: left top;
+    transform-origin: left top;
+    border-radius: $border-radius;
+    pointer-events:none;
+  }
+}

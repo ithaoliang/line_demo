@@ -1,0 +1,86 @@
+{
+  // Default options
+  'functions': true,
+  'variableNameTransforms': ['dasherize']
+}
+
+
+作者：webCoder
+链接：http://www.jianshu.com/p/d0fe770b07ae
+來源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+{{#extend "scss"}}
+{{#content "sprites" mode="append"}}
+{{#each retina_sprites}}
+${{strings.name_name}}: '{{name}}';
+${{strings.name_x}}: {{px.x}};
+${{strings.name_y}}: {{px.y}};
+${{strings.name_offset_x}}: {{px.offset_x}};
+${{strings.name_offset_y}}: {{px.offset_y}};
+${{strings.name_width}}: {{px.width}};
+${{strings.name_height}}: {{px.height}};
+${{strings.name_total_width}}: {{px.total_width}};
+${{strings.name_total_height}}: {{px.total_height}};
+${{strings.name_image}}: '{{{escaped_image}}}';
+${{strings.name}}: ({{px.x}}, {{px.y}}, {{px.offset_x}}, {{px.offset_y}}, {{px.width}}, {{px.height}}, {{px.total_width}}, {{px.total_height}}, '{{{escaped_image}}}', '{{name}}', );
+{{/each}}
+{{/content}}
+
+
+{{#content "sprite-functions" mode="append"}}
+{{#if options.functions}}
+
+// The `retina-sprite` mixin sets up rules and a media query for a sprite/retina sprite.
+//   It should be used with a "retina group" variable.
+//
+// The media query is from CSS Tricks: https://css-tricks.com/snippets/css/retina-display-media-query/
+//
+// $icon-home-group: ('icon-home', $icon-home, $icon-home-2x, );
+//
+// .icon-home {
+//   @include retina-sprite($icon-home-group);
+// }
+@mixin sprite-background-size($sprite) {
+  $sprite-total-width: nth($sprite, 7);
+  $sprite-total-height: nth($sprite, 8);
+  background-size: $sprite-total-width $sprite-total-height;
+}
+
+{{/if}}
+{{/content}}
+
+{{#content "spritesheet-functions" mode="append"}}
+{{#if options.functions}}
+
+@mixin sprite-retina-width($sprite) {
+  width: nth($sprite, 5)/2;
+}
+
+@mixin sprite-retina-height($sprite) {
+  height: nth($sprite, 6)/2;
+}
+
+@mixin sprite-retina-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3)/2;
+  $sprite-offset-y: nth($sprite, 4)/2;
+  background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-retina-background-size($sprite) {
+  $sprite-total-width: nth($sprite, 7)/2;
+  $sprite-total-height: nth($sprite, 8)/2;
+  background-size: $sprite-total-width $sprite-total-height;
+}
+
+@mixin sprite($sprite) {
+  display: inline-block;
+  @include sprite-image($sprite);
+  @include sprite-retina-position($sprite);
+  @include sprite-retina-width($sprite);
+  @include sprite-retina-height($sprite);
+  @include sprite-retina-background-size($sprite);
+}
+
+{{/if}}
+{{/content}}
+{{/extend}}

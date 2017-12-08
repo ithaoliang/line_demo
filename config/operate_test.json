@@ -1,0 +1,10 @@
+{
+	"OP_HOST": "localhost",
+	"OP_UCENTER": "https://tm.kbao123.com/ucenter",
+	"OP_HD": "https://tm.kbao123.com/marketing",
+	"OP_TM": "https://tm.kbao123.com/3.8",
+	"OP_TM_4": "https://tm.kbao123.com/4.0",
+	"OP_SCLUB": "https://tm.kbao123.com/sclub",
+	"OP_LIVE_POLYV": "http://api.live.polyv.net",
+	"OP_CHAT_POLYV": "https://apichat.polyv.net"
+}
